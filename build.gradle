@@ -1,6 +1,14 @@
 
-apply plugin 'java';
-apply plugin 'eclipse';
+apply plugin: 'java'
+apply plugin: 'eclipse'
 
+repositories {
+  mavenCentral();
+}
+
+dependencies {
+	compile 'org.eclipse.jgit:org.eclipse.jgit:3.2.0.201312181205-r'
+	compile 'org.json:json:20090211'
+}
 
 
