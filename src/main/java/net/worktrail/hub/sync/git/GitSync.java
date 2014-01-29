@@ -15,6 +15,7 @@ import java.util.Set;
 
 import net.worktrail.hub.sync.EmployeeListResponse;
 import net.worktrail.hub.sync.WorkTrailAuth;
+import net.worktrail.hub.sync.WorkTrailSync;
 import net.worktrail.hub.sync.response.CreateHubEntriesResponse;
 import net.worktrail.hub.sync.response.Employee;
 import net.worktrail.hub.sync.response.HubEntry;
@@ -28,7 +29,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
-public class GitSync {
+public class GitSync extends WorkTrailSync {
 
 	private Git git;
 	private WorkTrailAuth auth;
@@ -68,7 +69,8 @@ public class GitSync {
 		}
 	}
 
-	public void syncLogs() {
+	@Override
+	public void startHubSync() {
 		// First fetch all employees
 		try {
 			EmployeeListResponse employeeListResponse = auth.fetchEmployees();
