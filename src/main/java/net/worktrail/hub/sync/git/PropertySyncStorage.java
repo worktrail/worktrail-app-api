@@ -9,21 +9,33 @@ import java.util.Properties;
 public class PropertySyncStorage implements SyncStorage {
 	
 	private Properties props;
+	private Properties syncProps;
 	private boolean dirty;
 	private File file;
+	private boolean dirtySyncProps;
+	private File syncStorageFile;
 	
-	public PropertySyncStorage(File file) {
+	public PropertySyncStorage(File file, File syncStorageFile) {
 		this.file = file;
+		this.syncStorageFile = syncStorageFile;
 		props = new Properties();
-		if (file.exists()) {
-			try {
+		syncProps = new Properties();
+		try {
+			if (file.exists()) {
 				FileInputStream is = new FileInputStream(file);
 				props.load(is);
-			} catch (IOException e) {
-				throw new RuntimeException("Error while loading properties.", e);
+				is.close();
 			}
+			if (syncStorageFile.exists()) {
+				FileInputStream is = new FileInputStream(syncStorageFile);
+				syncProps.load(is);
+				is.close();
+			}
+		} catch (IOException e) {
+			throw new RuntimeException("Error while loading properties.", e);
 		}
 		dirty = false;
+		dirtySyncProps = false;
 	}
 	
 	public void save() {
@@ -31,11 +43,27 @@ public class PropertySyncStorage implements SyncStorage {
 			try {
 				FileOutputStream out = new FileOutputStream(file);
 				props.store(out, "");
+				out.close();
 				dirty = false;
 			} catch (IOException e) {
 				throw new RuntimeException("Error while storing output stream.", e);
 			}
 		}
+		if (dirtySyncProps) {
+			try {
+				FileOutputStream out = new FileOutputStream(syncStorageFile);
+				syncProps.store(out, "");
+				out.close();
+				dirtySyncProps = false;
+			} catch (IOException e) {
+				throw new RuntimeException("Error while storing output stream.", e);
+			}
+		}
+	}
+	
+	@Override
+	public void close() {
+		save();
 	}
 
 	@Override
@@ -48,6 +76,27 @@ public class PropertySyncStorage implements SyncStorage {
 	@Override
 	public String getString(String key) {
 		return props.getProperty(key);
+	}
+
+	@Override
+	public void syncedObject(String identifier, long workTrailId) {
+		syncProps.setProperty("sync."+identifier, Long.toString(workTrailId));
+		dirtySyncProps = true;
+	}
+
+	@Override
+	public Long wasObjectSynced(String identifier) {
+		String id = syncProps.getProperty("sync."+identifier);
+		if (id == null) {
+			return null;
+		}
+		return new Long(id);
+	}
+
+	@Override
+	public void cleanSyncedObjects() {
+		syncProps.clear();
+		dirtySyncProps = true;
 	}
 
 }

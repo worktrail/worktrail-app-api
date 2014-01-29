@@ -22,25 +22,47 @@ public class GitSyncCli {
 	
 	public GitSyncCli(SyncStorage syncStorage) {
 		this.storage = syncStorage;
-		auth = new WorkTrailAuth(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY));
+		auth = new WorkTrailAuth(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY), storage.getString(STORE_AUTHTOKEN));
 	}
 	
 	public static void main(String[] args) {
 		if (args.length < 1) {
-			System.err.println("Required arguments: {config|import} <Path to git repository>");
+			System.err.println("Required arguments: {config|import|employees} <Path to git repository>");
 			System.exit(1);
 		}
 		
-		GitSyncCli cli = new GitSyncCli(new PropertySyncStorage(new File("gitsync.properties")));
+		GitSyncCli cli = new GitSyncCli(new PropertySyncStorage(new File("gitsync.properties"), new File("gitsync.save.properties")));
 		
 		if (!cli.hasAuthentication() || "config".equals(args[0])) {
 			cli.authenticate();
+		} else if ("employees".equals(args[0])) {
+			cli.debugEmployees();
+		} else if ("import".equals(args[0])) {
+			cli.runSync(new File(args[1]));
+		} else if ("clean".equals(args[0])) {
+			cli.clean();
 		}
 		
-		cli.runSync();
+		cli.storage.close();
+		
+//		cli.runSync();
 		
 		
 //		new GitSync(new File(args[0])).syncLogs();
+	}
+
+	private void clean() {
+		auth.cleanHubEntries();
+		storage.cleanSyncedObjects();
+	}
+
+	private void debugEmployees() {
+		try {
+			auth.fetchEmployees();
+		} catch (RequestErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void authenticate() {
@@ -55,7 +77,7 @@ public class GitSyncCli {
 				storage.setString(STORE_SECRETAPIKEY, secretApiKey);
 			}
 			
-			auth = new WorkTrailAuth(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY));
+			auth = new WorkTrailAuth(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY), storage.getString(STORE_AUTHTOKEN));
 			CreateAuthResponse authRequest = auth.createAuthRequest(new WorkTrailScope[] {
 					WorkTrailScope.READ_EMPLOYEES, WorkTrailScope.SYNC_HUB_DATA });
 			storage.setString(STORE_AUTHTOKEN, authRequest.getAuthToken());
@@ -85,6 +107,8 @@ public class GitSyncCli {
 				&& storage.getString(STORE_AUTHTOKEN) != null;
 	}
 
-	private void runSync() {
+	private void runSync(File file) {
+		GitSync gitSync = new GitSync(auth, storage, file);
+		gitSync.syncLogs();
 	}
 }
