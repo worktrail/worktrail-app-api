@@ -27,15 +27,18 @@ public class WorkTrailAuth {
 	private String appKey;
 	private String secretApiKey;
 	private String authToken;
-//	private static final String WORKTRAIL_SERVER = "https://worktrail.net";
-	private static final String WORKTRAIL_SERVER = "http://tools.sphene.net:8888";
+	private static final String WORKTRAIL_SERVER = "https://worktrail.net";
+//	private static final String WORKTRAIL_SERVER = "http://tools.sphene.net:8888";
 	private static Logger logger = Logger.getLogger(WorkTrailAuth.class.getName());
+	private String workTrailServer = WORKTRAIL_SERVER;
 
 	
 	public WorkTrailAuth(String appKey, String secretApiKey, String authToken) {
 		this.appKey = appKey;
 		this.secretApiKey = secretApiKey;
 		this.authToken = authToken;
+		
+		workTrailServer = System.getProperty("net.worktrail.hub.server", WORKTRAIL_SERVER);
 	}
 	
 	
@@ -149,7 +152,7 @@ public class WorkTrailAuth {
 				args.put("authtoken", authToken);
 			}
 			
-			URL url = new URL(WORKTRAIL_SERVER + "/" + path);
+			URL url = new URL(workTrailServer + "/" + path);
 			String query = WorkTrailConnectionUtils.getQuery(args.entrySet());
 			StringBuilder ret = WorkTrailConnectionUtils.requestDataFromUrl(url, query.getBytes("UTF-8"), "WorkTrail Hub");
 			return new JSONObject(ret.toString());
