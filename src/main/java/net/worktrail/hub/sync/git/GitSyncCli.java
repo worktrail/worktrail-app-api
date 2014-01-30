@@ -24,4 +24,9 @@ public class GitSyncCli extends WorkTrailCliFramework {
 			WorkTrailAuth auth, String[] args) {
 		return new GitSync(auth, storage, new File(args[1]));
 	}
+
+	@Override
+	protected String getSyncUnixName() {
+		return "gitsync";
+	}
 }

@@ -12,14 +12,30 @@ public class HubEntry {
 	private SrcType srcType;
 	private String summary;
 	private String link;
+	private String identifier;
 
-	public HubEntry(Employee employee, Date time, Date endTime, SrcType srcType, String summary, String link) {
+	/**
+	 * 
+	 * @param identifier the identifier in the local system, NOT in WorkTrail.
+	 * @param employee
+	 * @param time
+	 * @param endTime
+	 * @param srcType
+	 * @param summary
+	 * @param link
+	 */
+	public HubEntry(String identifier, Employee employee, Date time, Date endTime, SrcType srcType, String summary, String link) {
+		this.identifier = identifier;
 		this.employee = employee;
 		this.time = time;
 		this.endTime = endTime;
 		this.srcType = srcType;
 		this.summary = summary;
 		this.link = link;
+	}
+	
+	public String getIdentifier() {
+		return identifier;
 	}
 	
 	public Employee getEmployee() {

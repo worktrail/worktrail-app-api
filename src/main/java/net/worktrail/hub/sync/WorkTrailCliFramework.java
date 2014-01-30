@@ -5,11 +5,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Collection;
+import java.util.List;
+
+import javax.management.RuntimeErrorException;
 
 import net.worktrail.hub.sync.git.GitSyncCli;
 import net.worktrail.hub.sync.git.PropertySyncStorage;
 import net.worktrail.hub.sync.git.SyncStorage;
 import net.worktrail.hub.sync.response.CreateAuthResponse;
+import net.worktrail.hub.sync.response.CreateHubEntriesResponse;
+import net.worktrail.hub.sync.response.HubEntry;
 import net.worktrail.hub.sync.response.RequestErrorException;
 
 public abstract class WorkTrailCliFramework {
@@ -24,8 +30,14 @@ public abstract class WorkTrailCliFramework {
 		init(createStorage());
 	}
 	
+	/**
+	 * a simple name we use in filenames .. e.g. gitsync
+	 */
+	protected abstract String getSyncUnixName();
+	
 	protected SyncStorage createStorage() {
-		return new PropertySyncStorage(new File("gitsync.properties"), new File("gitsync.save.properties"));
+		String propertiesBaseName = getSyncUnixName();
+		return new PropertySyncStorage(new File(propertiesBaseName+".properties"), new File(propertiesBaseName+".save.properties"));
 	}
 
 	protected void init(SyncStorage syncStorage) {
@@ -56,7 +68,14 @@ public abstract class WorkTrailCliFramework {
 	
 
 	private void runSync(String[] args) {
-		createSyncObject(storage, auth, args).startHubSync();
+		WorkTrailSync sync = createSyncObject(storage, auth, args);
+		try {
+			sync.prepareHubSync();
+			List<HubEntry> toCreate = sync.startHubSync();
+			sync.finishHubSync(toCreate);
+		} catch (Exception e) {
+			throw new RuntimeException("Error while running hub sync", e);
+		}
 	}
 
 	private void clean() {
