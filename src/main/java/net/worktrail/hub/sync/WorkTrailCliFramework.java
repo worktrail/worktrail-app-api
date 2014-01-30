@@ -5,16 +5,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Collection;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
-import net.worktrail.hub.sync.git.GitSyncCli;
 import net.worktrail.hub.sync.git.PropertySyncStorage;
 import net.worktrail.hub.sync.git.SyncStorage;
 import net.worktrail.hub.sync.response.CreateAuthResponse;
-import net.worktrail.hub.sync.response.CreateHubEntriesResponse;
 import net.worktrail.hub.sync.response.HubEntry;
 import net.worktrail.hub.sync.response.RequestErrorException;
 
@@ -22,6 +17,7 @@ public abstract class WorkTrailCliFramework {
 	private static final String STORE_APPKEY = "appkey";
 	private static final String STORE_SECRETAPIKEY = "secretapikey";
 	private static final String STORE_AUTHTOKEN = "authtoken";
+	@SuppressWarnings("unused")
 	private static final String STORE_REQUESTKEY = "requestkey";
 	private SyncStorage storage;
 	private WorkTrailAuth auth;

@@ -13,10 +13,8 @@ import java.util.Set;
 
 import net.worktrail.hub.sync.WorkTrailAuth;
 import net.worktrail.hub.sync.WorkTrailSync;
-import net.worktrail.hub.sync.response.CreateHubEntriesResponse;
 import net.worktrail.hub.sync.response.Employee;
 import net.worktrail.hub.sync.response.HubEntry;
-import net.worktrail.hub.sync.response.RequestErrorException;
 import net.worktrail.hub.sync.response.SrcType;
 
 import org.eclipse.jgit.api.Git;
@@ -29,7 +27,6 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 public class GitSync extends WorkTrailSync {
 
 	private Git git;
-	private WorkTrailAuth auth;
 	private SyncStorage storage;
 	private Properties props;
 	private String urlPrefix;
@@ -37,7 +34,6 @@ public class GitSync extends WorkTrailSync {
 
 	public GitSync(WorkTrailAuth auth, SyncStorage storage, File gitRepository) {
 		super(auth, storage);
-		this.auth = auth;
 		this.storage = storage;
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		try {

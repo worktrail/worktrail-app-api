@@ -5,18 +5,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import javax.xml.bind.DatatypeConverter;
-
-import org.eclipse.jgit.util.Base64;
-import org.jsoup.Jsoup;
 
 import net.worktrail.hub.sync.WorkTrailAuth;
 import net.worktrail.hub.sync.WorkTrailSync;
@@ -30,13 +25,13 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.ParsingException;
-import nu.xom.ValidityException;
+
+import org.eclipse.jgit.util.Base64;
+import org.jsoup.Jsoup;
 
 public class ActivityStreamSync extends WorkTrailSync {
 
 	private SyncStorage storage;
-	private WorkTrailAuth auth;
-	private String[] args;
 	private Properties props;
 	private String url;
 	private String username;
@@ -46,8 +41,6 @@ public class ActivityStreamSync extends WorkTrailSync {
 			String[] args) {
 		super(auth, storage);
 		this.storage = storage;
-		this.auth = auth;
-		this.args = args;
 		try {
 			File file = new File("activitystream.properties");
 			if (!file.exists()) {
