@@ -22,10 +22,11 @@ dependencies {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'net.worktrail.hub.sync.git.GitSyncCli'
+		attributes 'Main-Class': 'net.worktrail.hub.sync.Launcher'
 	}
 }
 
-mainClassName = 'net.worktrail.hub.sync.git.GitSyncCli'
+
+mainClassName = 'net.worktrail.hub.sync.Launcher'
 
 

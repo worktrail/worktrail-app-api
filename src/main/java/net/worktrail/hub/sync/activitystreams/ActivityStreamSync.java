@@ -108,7 +108,7 @@ public class ActivityStreamSync extends WorkTrailSync {
 					
 					String entryTitleText = Jsoup.parse(entryTitle).text();
 					
-					System.out.println("Got activity object. entryTitle: " + entryTitle + "  /// " + title + ": " + summary + " / " + updated.getTime() + " / id: " + identifier + " link: " + link);
+					//System.out.println("Got activity object. entryTitle: " + entryTitle + "  /// " + title + ": " + summary + " / " + updated.getTime() + " / id: " + identifier + " link: " + link);
 
 					if (storage.wasObjectSynced(identifier) != null) {
 						continue;

@@ -1,1 +1,2 @@
 rootProject.name = 'worktrail-hub-sync'
+include 'activitystreamsync'
