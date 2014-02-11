@@ -22,8 +22,8 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class WorkTrailAuthTest {
-	private static final Logger logger = Logger.getLogger(WorkTrailAuthTest.class.getName());
+public class WorkTrailAppApiTest {
+	private static final Logger logger = Logger.getLogger(WorkTrailAppApiTest.class.getName());
 	
 	private WorkTrailAppApi workTrail;
 
