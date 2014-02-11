@@ -25,11 +25,11 @@ dependencies {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'net.worktrail.hub.sync.Launcher'
+		attributes 'Main-Class': 'net.worktrail.appapi.hub.Launcher'
 	}
 }
 
 
-mainClassName = 'net.worktrail.hub.sync.Launcher'
+mainClassName = 'net.worktrail.appapi.hub.Launcher'
 
 

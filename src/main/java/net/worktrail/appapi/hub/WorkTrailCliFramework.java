@@ -1,4 +1,4 @@
-package net.worktrail.appapi;
+package net.worktrail.appapi.hub;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-import net.worktrail.appapi.git.PropertySyncStorage;
-import net.worktrail.appapi.git.SyncStorage;
+import net.worktrail.appapi.WorkTrailAppApi;
+import net.worktrail.appapi.WorkTrailScope;
+import net.worktrail.appapi.hub.git.PropertySyncStorage;
+import net.worktrail.appapi.hub.git.SyncStorage;
 import net.worktrail.appapi.response.CreateAuthResponse;
 import net.worktrail.appapi.response.HubEntry;
 import net.worktrail.appapi.response.RequestErrorException;

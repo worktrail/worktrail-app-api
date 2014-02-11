@@ -1,9 +1,9 @@
-package net.worktrail.appapi;
+package net.worktrail.appapi.hub;
 
 import java.util.Arrays;
 
-import net.worktrail.appapi.activitystreams.ActivityStreamCli;
-import net.worktrail.appapi.git.GitSyncCli;
+import net.worktrail.appapi.hub.activitystreams.ActivityStreamCli;
+import net.worktrail.appapi.hub.git.GitSyncCli;
 
 public class Launcher {
 	public static void main(String[] args) {

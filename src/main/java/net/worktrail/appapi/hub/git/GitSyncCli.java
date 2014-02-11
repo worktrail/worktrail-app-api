@@ -1,10 +1,10 @@
-package net.worktrail.appapi.git;
+package net.worktrail.appapi.hub.git;
 
 import java.io.File;
 
 import net.worktrail.appapi.WorkTrailAppApi;
-import net.worktrail.appapi.WorkTrailCliFramework;
-import net.worktrail.appapi.WorkTrailSync;
+import net.worktrail.appapi.hub.WorkTrailCliFramework;
+import net.worktrail.appapi.hub.WorkTrailSync;
 
 public class GitSyncCli extends WorkTrailCliFramework {
 	

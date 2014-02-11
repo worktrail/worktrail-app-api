@@ -1,9 +1,9 @@
-package net.worktrail.appapi.activitystreams;
+package net.worktrail.appapi.hub.activitystreams;
 
 import net.worktrail.appapi.WorkTrailAppApi;
-import net.worktrail.appapi.WorkTrailCliFramework;
-import net.worktrail.appapi.WorkTrailSync;
-import net.worktrail.appapi.git.SyncStorage;
+import net.worktrail.appapi.hub.WorkTrailCliFramework;
+import net.worktrail.appapi.hub.WorkTrailSync;
+import net.worktrail.appapi.hub.git.SyncStorage;
 
 public class ActivityStreamCli extends WorkTrailCliFramework {
 

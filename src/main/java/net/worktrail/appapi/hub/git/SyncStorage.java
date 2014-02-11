@@ -1,4 +1,4 @@
-package net.worktrail.appapi.git;
+package net.worktrail.appapi.hub.git;
 
 public interface SyncStorage {
 	public void setString(String key, String value);

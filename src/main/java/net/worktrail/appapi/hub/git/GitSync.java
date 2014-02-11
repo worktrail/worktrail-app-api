@@ -1,4 +1,4 @@
-package net.worktrail.appapi.git;
+package net.worktrail.appapi.hub.git;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import net.worktrail.appapi.WorkTrailAppApi;
-import net.worktrail.appapi.WorkTrailSync;
+import net.worktrail.appapi.hub.WorkTrailSync;
 import net.worktrail.appapi.response.Employee;
 import net.worktrail.appapi.response.HubEntry;
 import net.worktrail.appapi.response.SrcType;

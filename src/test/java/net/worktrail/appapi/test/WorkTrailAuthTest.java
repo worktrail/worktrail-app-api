@@ -1,4 +1,4 @@
-package net.worktrail.api.hub.test;
+package net.worktrail.appapi.test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

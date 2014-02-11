@@ -1,4 +1,4 @@
-package net.worktrail.appapi;
+package net.worktrail.appapi.hub;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.worktrail.appapi.git.SyncStorage;
+import net.worktrail.appapi.EmployeeListResponse;
+import net.worktrail.appapi.WorkTrailAppApi;
+import net.worktrail.appapi.hub.git.SyncStorage;
 import net.worktrail.appapi.response.CreateHubEntriesResponse;
 import net.worktrail.appapi.response.Employee;
 import net.worktrail.appapi.response.HubEntry;

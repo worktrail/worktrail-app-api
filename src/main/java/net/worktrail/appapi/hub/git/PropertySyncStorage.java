@@ -1,4 +1,4 @@
-package net.worktrail.appapi.git;
+package net.worktrail.appapi.hub.git;
 
 import java.io.File;
 import java.io.FileInputStream;
