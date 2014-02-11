@@ -1,7 +1,5 @@
 package net.worktrail.appapi.test;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,20 +27,6 @@ public class WorkTrailAppApiTest extends AbstractWorkTrailAppApiTest {
 		logger.info("We got the following employees: " + employees.getEmployeeList());
 	}
 	
-	
-	protected JSONObject requestPage(String path, Map<String, String> args) throws RequestErrorException {
-		try {
-			Method requestPageMethod = workTrail.getClass().getDeclaredMethod("requestPage", new Class[] { String.class, Map.class });
-			requestPageMethod.setAccessible(true);
-			JSONObject response = (JSONObject) requestPageMethod.invoke(workTrail, path, args);
-			return response;
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			if (e.getCause() instanceof RequestErrorException) {
-				throw (RequestErrorException) e.getCause();
-			}
-			throw new RuntimeException("Error while calling requestPage.", e);
-		}
-	}
 	
 	@Test
 	public void testFetchCompany() throws Exception {

@@ -1,8 +1,14 @@
 package net.worktrail.appapi.test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
+
 import net.worktrail.appapi.WorkTrailAppApi;
 import net.worktrail.appapi.WorkTrailScope;
+import net.worktrail.appapi.response.RequestErrorException;
 
+import org.json.JSONObject;
 import org.junit.Before;
 
 public abstract class AbstractWorkTrailAppApiTest {
@@ -20,5 +26,23 @@ public abstract class AbstractWorkTrailAppApiTest {
 		
 		workTrail.generateTestUser(new WorkTrailScope[] { WorkTrailScope.READ_EMPLOYEES, WorkTrailScope.WRITE_TASKS, WorkTrailScope.READ_TASKS });
 	}
+
+	/**
+	 * can be used by tests to directly access the requestPage method and handle json parameters.
+	 */
+	protected JSONObject requestPage(String path, Map<String, String> args) throws RequestErrorException {
+		try {
+			Method requestPageMethod = workTrail.getClass().getDeclaredMethod("requestPage", new Class[] { String.class, Map.class });
+			requestPageMethod.setAccessible(true);
+			JSONObject response = (JSONObject) requestPageMethod.invoke(workTrail, path, args);
+			return response;
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			if (e.getCause() instanceof RequestErrorException) {
+				throw (RequestErrorException) e.getCause();
+			}
+			throw new RuntimeException("Error while calling requestPage.", e);
+		}
+	}
+	
 
 }
