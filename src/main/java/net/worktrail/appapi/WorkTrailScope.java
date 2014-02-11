@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync;
+package net.worktrail.appapi;
 
 public enum WorkTrailScope {
 	READ_TASKS("read-tasks"),

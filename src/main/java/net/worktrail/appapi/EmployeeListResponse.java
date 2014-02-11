@@ -1,9 +1,9 @@
-package net.worktrail.hub.sync;
+package net.worktrail.appapi;
 
 import java.util.Collection;
 
-import net.worktrail.hub.sync.response.Employee;
-import net.worktrail.hub.sync.response.WorkTrailResponse;
+import net.worktrail.appapi.response.Employee;
+import net.worktrail.appapi.response.WorkTrailResponse;
 
 public class EmployeeListResponse extends WorkTrailResponse {
 

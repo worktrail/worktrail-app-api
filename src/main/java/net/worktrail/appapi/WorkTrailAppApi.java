@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync;
+package net.worktrail.appapi;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.worktrail.hub.sync.model.Company;
-import net.worktrail.hub.sync.response.CreateAuthResponse;
-import net.worktrail.hub.sync.response.CreateHubEntriesResponse;
-import net.worktrail.hub.sync.response.Employee;
-import net.worktrail.hub.sync.response.HubEntry;
-import net.worktrail.hub.sync.response.RequestErrorException;
+import net.worktrail.appapi.model.Company;
+import net.worktrail.appapi.response.CreateAuthResponse;
+import net.worktrail.appapi.response.CreateHubEntriesResponse;
+import net.worktrail.appapi.response.Employee;
+import net.worktrail.appapi.response.HubEntry;
+import net.worktrail.appapi.response.RequestErrorException;
 
 import org.json.JSONArray;
 import org.json.JSONException;

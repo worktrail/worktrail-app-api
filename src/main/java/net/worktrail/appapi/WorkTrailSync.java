@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync;
+package net.worktrail.appapi;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.worktrail.hub.sync.git.SyncStorage;
-import net.worktrail.hub.sync.response.CreateHubEntriesResponse;
-import net.worktrail.hub.sync.response.Employee;
-import net.worktrail.hub.sync.response.HubEntry;
-import net.worktrail.hub.sync.response.RequestErrorException;
+import net.worktrail.appapi.git.SyncStorage;
+import net.worktrail.appapi.response.CreateHubEntriesResponse;
+import net.worktrail.appapi.response.Employee;
+import net.worktrail.appapi.response.HubEntry;
+import net.worktrail.appapi.response.RequestErrorException;
 
 public abstract class WorkTrailSync {
 	

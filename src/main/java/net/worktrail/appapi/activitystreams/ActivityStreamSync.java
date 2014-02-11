@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync.activitystreams;
+package net.worktrail.appapi.activitystreams;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,12 +13,12 @@ import java.util.Properties;
 
 import javax.xml.bind.DatatypeConverter;
 
-import net.worktrail.hub.sync.WorkTrailAppApi;
-import net.worktrail.hub.sync.WorkTrailSync;
-import net.worktrail.hub.sync.git.SyncStorage;
-import net.worktrail.hub.sync.response.Employee;
-import net.worktrail.hub.sync.response.HubEntry;
-import net.worktrail.hub.sync.response.SrcType;
+import net.worktrail.appapi.WorkTrailAppApi;
+import net.worktrail.appapi.WorkTrailSync;
+import net.worktrail.appapi.git.SyncStorage;
+import net.worktrail.appapi.response.Employee;
+import net.worktrail.appapi.response.HubEntry;
+import net.worktrail.appapi.response.SrcType;
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;

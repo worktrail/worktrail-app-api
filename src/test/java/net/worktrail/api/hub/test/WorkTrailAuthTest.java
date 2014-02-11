@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import net.worktrail.hub.sync.EmployeeListResponse;
-import net.worktrail.hub.sync.WorkTrailAppApi;
-import net.worktrail.hub.sync.WorkTrailScope;
-import net.worktrail.hub.sync.model.Company;
-import net.worktrail.hub.sync.response.RequestErrorException;
+import net.worktrail.appapi.EmployeeListResponse;
+import net.worktrail.appapi.WorkTrailAppApi;
+import net.worktrail.appapi.WorkTrailScope;
+import net.worktrail.appapi.model.Company;
+import net.worktrail.appapi.response.RequestErrorException;
 
 import org.json.JSONObject;
 import org.junit.Assert;

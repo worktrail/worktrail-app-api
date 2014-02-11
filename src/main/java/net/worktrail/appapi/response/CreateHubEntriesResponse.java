@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync.response;
+package net.worktrail.appapi.response;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync.git;
+package net.worktrail.appapi.git;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import net.worktrail.hub.sync.WorkTrailAppApi;
-import net.worktrail.hub.sync.WorkTrailSync;
-import net.worktrail.hub.sync.response.Employee;
-import net.worktrail.hub.sync.response.HubEntry;
-import net.worktrail.hub.sync.response.SrcType;
+import net.worktrail.appapi.WorkTrailAppApi;
+import net.worktrail.appapi.WorkTrailSync;
+import net.worktrail.appapi.response.Employee;
+import net.worktrail.appapi.response.HubEntry;
+import net.worktrail.appapi.response.SrcType;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;

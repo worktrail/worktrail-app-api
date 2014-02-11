@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync.git;
+package net.worktrail.appapi.git;
 
 import java.io.File;
 import java.io.FileInputStream;

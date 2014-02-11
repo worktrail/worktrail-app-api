@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync;
+package net.worktrail.appapi;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,11 +7,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-import net.worktrail.hub.sync.git.PropertySyncStorage;
-import net.worktrail.hub.sync.git.SyncStorage;
-import net.worktrail.hub.sync.response.CreateAuthResponse;
-import net.worktrail.hub.sync.response.HubEntry;
-import net.worktrail.hub.sync.response.RequestErrorException;
+import net.worktrail.appapi.git.PropertySyncStorage;
+import net.worktrail.appapi.git.SyncStorage;
+import net.worktrail.appapi.response.CreateAuthResponse;
+import net.worktrail.appapi.response.HubEntry;
+import net.worktrail.appapi.response.RequestErrorException;
 
 public abstract class WorkTrailCliFramework {
 	private static final String STORE_APPKEY = "appkey";

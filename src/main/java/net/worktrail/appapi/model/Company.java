@@ -1,4 +1,4 @@
-package net.worktrail.hub.sync.model;
+package net.worktrail.appapi.model;
 
 import com.google.common.base.Objects;
 
