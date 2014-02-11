@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.worktrail.hub.sync.model.Company;
 import net.worktrail.hub.sync.response.CreateAuthResponse;
 import net.worktrail.hub.sync.response.CreateHubEntriesResponse;
 import net.worktrail.hub.sync.response.Employee;
@@ -113,7 +114,7 @@ public class WorkTrailAuth {
 		}
 	}
 	
-	public void cleanHubEntries() {
+	public void cleanHubEntries() throws RequestErrorException {
 		requestPage("rest/hub/entries/clean/");
 	}
 	
@@ -121,8 +122,9 @@ public class WorkTrailAuth {
 	 * Checks whether the auth token which is represented by the request key was already authorized.
 	 * @param requestKey
 	 * @return
+	 * @throws RequestErrorException 
 	 */
-	public boolean verifyAuthorization(String requestKey) {
+	public boolean verifyAuthorization(String requestKey) throws RequestErrorException {
 		Map<String, String> args = new HashMap<>();
 		args.put("requestkey", requestKey);
 		JSONObject ret = requestPage("rest/token/confirm/", args);
@@ -131,24 +133,24 @@ public class WorkTrailAuth {
 			if ("active".equals(status)) {
 				return true;
 			} else if ("rejected".equals(status)) {
-				throw new RuntimeException("authorization was rejected.");
+				throw new RequestErrorException("authorization was rejected.", null);
 			}
 			return false;
 		} catch (JSONException e) {
-			throw new RuntimeException("Error while retrieving status.", e);
+			throw new RequestErrorException("Error while retrieving status.", e);
 		}
 	}
 
-	private JSONObject requestPage(String path) {
+	private JSONObject requestPage(String path) throws RequestErrorException {
 		return requestPage(path, (Map<String, String>)null);
 	}
 
-	private JSONObject requestPage(String path, JSONObject data) {
+	private JSONObject requestPage(String path, JSONObject data) throws RequestErrorException {
 		Map<String, String> args = new HashMap<>();
 		args.put("data", data.toString());
 		return requestPage(path, args);
 	}
-	private JSONObject requestPage(String path, Map<String, String> args) {
+	private JSONObject requestPage(String path, Map<String, String> args) throws RequestErrorException {
 		try {
 			if (args == null) {
 				args = new HashMap<>();
@@ -162,7 +164,12 @@ public class WorkTrailAuth {
 			URL url = new URL(workTrailServer + "/" + path);
 			String query = WorkTrailConnectionUtils.getQuery(args.entrySet());
 			StringBuilder ret = WorkTrailConnectionUtils.requestDataFromUrl(url, query.getBytes("UTF-8"), "WorkTrail Hub");
-			return new JSONObject(ret.toString());
+			JSONObject response = new JSONObject(ret.toString());
+			if (response.has("error")) {
+				logger.severe("Server returned error from request." + response.toString(4));
+				throw new RequestErrorException("Server responded with an error message: " + response.getString("error"), null, response);
+			}
+			return response;
 		} catch (IOException | JSONException e) {
 			throw new RuntimeException("Error when requesting page {" + path + "}", e);
 		}
@@ -177,8 +184,9 @@ public class WorkTrailAuth {
 	/**
 	 * generates a test user - will NOT work on https://worktrail.net !
 	 * @return auth token.
+	 * @throws RequestErrorException 
 	 */
-	public String generateTestUser(WorkTrailScope[] scopes) {
+	public String generateTestUser(WorkTrailScope[] scopes) throws RequestErrorException {
 		Map<String, String> args = createAuthArgs(scopes);
 		JSONObject ret = requestPage("rest/token/generatetestuser/", args);
 		try {
@@ -191,7 +199,22 @@ public class WorkTrailAuth {
 			} catch (JSONException e1) {
 				// never mind..
 			}
-			throw new RuntimeException("Error while generating test user.", e);
+			throw new RequestErrorException("Error while generating test user.", e);
+		}
+	}
+
+
+	public Company fetchCompany() throws RequestErrorException {
+		JSONObject ret = requestPage("rest/company/");
+		try {
+			Company company = new Company(ret.getLong("id"),
+					ret.getString("name"), ret.getString("slug"),
+					ret.getLong("break_task_id"),
+					ret.getLong("org_project_id"),
+					ret.getLong("unassigned_project_id"));
+			return company;
+		} catch (JSONException e) {
+			throw new RequestErrorException("Error while parsing response.", e);
 		}
 	}
 }

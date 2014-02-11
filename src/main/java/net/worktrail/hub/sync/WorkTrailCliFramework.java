@@ -75,8 +75,12 @@ public abstract class WorkTrailCliFramework {
 	}
 
 	private void clean() {
-		auth.cleanHubEntries();
-		storage.cleanSyncedObjects();
+		try {
+			auth.cleanHubEntries();
+			storage.cleanSyncedObjects();
+		} catch (RequestErrorException e) {
+			throw new RuntimeException("Error cleaning hub entries.", e);
+		}
 	}
 
 	private void debugEmployees() {
