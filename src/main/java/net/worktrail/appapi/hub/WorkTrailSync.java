@@ -9,16 +9,17 @@ import java.util.Set;
 import net.worktrail.appapi.EmployeeListResponse;
 import net.worktrail.appapi.WorkTrailAppApi;
 import net.worktrail.appapi.hub.git.SyncStorage;
+import net.worktrail.appapi.model.Employee;
+import net.worktrail.appapi.model.EmployeeImpl;
+import net.worktrail.appapi.model.HubEntry;
 import net.worktrail.appapi.response.CreateHubEntriesResponse;
-import net.worktrail.appapi.response.Employee;
-import net.worktrail.appapi.response.HubEntry;
 import net.worktrail.appapi.response.RequestErrorException;
 
 public abstract class WorkTrailSync {
 	
 	private WorkTrailAppApi auth;
 	private SyncStorage storage;
-	private Map<String, Employee> employeeEmailMap;
+	private Map<String, EmployeeImpl> employeeEmailMap;
 	private Set<String> missingUsers;
 
 	public WorkTrailSync(WorkTrailAppApi auth, SyncStorage storage) {
@@ -32,7 +33,7 @@ public abstract class WorkTrailSync {
 	public final void prepareHubSync() throws RequestErrorException {
 		EmployeeListResponse employeeListResponse = auth.fetchEmployees();
 		employeeEmailMap = new HashMap<>();
-		for (Employee employee : employeeListResponse.getEmployeeList()) {
+		for (EmployeeImpl employee : employeeListResponse.getEmployeeList()) {
 			employeeEmailMap.put(employee.getPrimaryEmail(), employee);
 			String emailAliases = storage.getString("employee.emailaddresses." + employee.getEmployeeId());
 			if (emailAliases == null) {

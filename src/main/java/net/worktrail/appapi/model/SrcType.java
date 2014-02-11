@@ -1,4 +1,4 @@
-package net.worktrail.appapi.response;
+package net.worktrail.appapi.model;
 
 public enum SrcType {
 	ISSUES("issues"),

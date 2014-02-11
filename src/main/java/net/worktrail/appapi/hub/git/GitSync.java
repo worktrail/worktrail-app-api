@@ -13,9 +13,9 @@ import java.util.Set;
 
 import net.worktrail.appapi.WorkTrailAppApi;
 import net.worktrail.appapi.hub.WorkTrailSync;
-import net.worktrail.appapi.response.Employee;
-import net.worktrail.appapi.response.HubEntry;
-import net.worktrail.appapi.response.SrcType;
+import net.worktrail.appapi.model.Employee;
+import net.worktrail.appapi.model.HubEntry;
+import net.worktrail.appapi.model.SrcType;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;

@@ -11,8 +11,8 @@ import net.worktrail.appapi.WorkTrailAppApi;
 import net.worktrail.appapi.WorkTrailScope;
 import net.worktrail.appapi.hub.git.PropertySyncStorage;
 import net.worktrail.appapi.hub.git.SyncStorage;
+import net.worktrail.appapi.model.HubEntry;
 import net.worktrail.appapi.response.CreateAuthResponse;
-import net.worktrail.appapi.response.HubEntry;
 import net.worktrail.appapi.response.RequestErrorException;
 
 public abstract class WorkTrailCliFramework {

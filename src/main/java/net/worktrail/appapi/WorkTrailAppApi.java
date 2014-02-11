@@ -12,10 +12,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.worktrail.appapi.model.Company;
+import net.worktrail.appapi.model.CompanyImpl;
+import net.worktrail.appapi.model.EmployeeImpl;
+import net.worktrail.appapi.model.HubEntry;
 import net.worktrail.appapi.response.CreateAuthResponse;
 import net.worktrail.appapi.response.CreateHubEntriesResponse;
-import net.worktrail.appapi.response.Employee;
-import net.worktrail.appapi.response.HubEntry;
 import net.worktrail.appapi.response.RequestErrorException;
 
 import org.json.JSONArray;
@@ -77,10 +78,10 @@ public class WorkTrailAppApi {
 				logger.finest("Retrieved employees: " + ret.toString(4));
 			}
 			JSONArray array = ret.getJSONArray("list");
-			Collection<Employee> employeeList = new ArrayList<>();
+			Collection<EmployeeImpl> employeeList = new ArrayList<>();
 			for (int i = 0 ; i < array.length() ; i++) {
 				JSONObject employee = array.getJSONObject(i);
-				Employee e = new Employee(
+				EmployeeImpl e = new EmployeeImpl(
 						employee.getLong("id"),
 						employee.getString("first_name"),
 						employee.getString("last_name"),
@@ -207,7 +208,7 @@ public class WorkTrailAppApi {
 	public Company fetchCompany() throws RequestErrorException {
 		JSONObject ret = requestPage("rest/company/");
 		try {
-			Company company = new Company(ret.getLong("id"),
+			Company company = new CompanyImpl(ret.getLong("id"),
 					ret.getString("name"), ret.getString("slug"),
 					ret.getLong("break_task_id"),
 					ret.getLong("org_project_id"),
