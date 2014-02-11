@@ -44,6 +44,14 @@ public class WorkTrailAppApi {
 		workTrailServer = System.getProperty("net.worktrail.hub.server", WORKTRAIL_SERVER);
 	}
 	
+	public String getAuthToken() {
+		return authToken;
+	}
+	
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+	
 	
 	public CreateAuthResponse createAuthRequest(WorkTrailAccessType accessType, WorkTrailScope[] scopes) throws RequestErrorException {
 		Map<String, String> args = createAuthArgs(accessType, scopes);
