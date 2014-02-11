@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
+import net.worktrail.appapi.WorkTrailAccessType;
 import net.worktrail.appapi.WorkTrailAppApi;
 import net.worktrail.appapi.WorkTrailScope;
 import net.worktrail.appapi.hub.git.PropertySyncStorage;
@@ -107,7 +108,7 @@ public abstract class WorkTrailCliFramework {
 			}
 			
 			auth = new WorkTrailAppApi(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY), storage.getString(STORE_AUTHTOKEN));
-			CreateAuthResponse authRequest = auth.createAuthRequest(new WorkTrailScope[] {
+			CreateAuthResponse authRequest = auth.createAuthRequest(WorkTrailAccessType.COMPANY, new WorkTrailScope[] {
 					WorkTrailScope.READ_EMPLOYEES, WorkTrailScope.SYNC_HUB_DATA });
 			storage.setString(STORE_AUTHTOKEN, authRequest.getAuthToken());
 			URL redirectUrl = authRequest.getRedirectUrl();

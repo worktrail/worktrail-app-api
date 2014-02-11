@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import net.worktrail.appapi.WorkTrailAccessType;
 import net.worktrail.appapi.WorkTrailAppApi;
 import net.worktrail.appapi.WorkTrailScope;
 import net.worktrail.appapi.response.RequestErrorException;
@@ -24,7 +25,8 @@ public abstract class AbstractWorkTrailAppApiTest {
 		this.workTrail = new WorkTrailAppApi("FJRU2eeDkT", "W6DbU7947hQgPmFMLhjdWv5AHWcawqmw3KZQyUBvzqtd2tafJs", null);
 		workTrail.setServerUrl("http://127.0.0.1:8000");
 		
-		workTrail.generateTestUser(new WorkTrailScope[] { WorkTrailScope.READ_EMPLOYEES, WorkTrailScope.WRITE_TASKS, WorkTrailScope.READ_TASKS });
+		workTrail.generateTestUser(WorkTrailAccessType.COMPANY,
+				new WorkTrailScope[] { WorkTrailScope.READ_EMPLOYEES, WorkTrailScope.WRITE_TASKS, WorkTrailScope.READ_TASKS });
 	}
 
 	/**

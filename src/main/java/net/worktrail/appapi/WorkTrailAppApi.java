@@ -45,8 +45,8 @@ public class WorkTrailAppApi {
 	}
 	
 	
-	public CreateAuthResponse createAuthRequest(WorkTrailScope[] scopes) throws RequestErrorException {
-		Map<String, String> args = createAuthArgs(scopes);
+	public CreateAuthResponse createAuthRequest(WorkTrailAccessType accessType, WorkTrailScope[] scopes) throws RequestErrorException {
+		Map<String, String> args = createAuthArgs(accessType, scopes);
 		JSONObject ret = requestPage("rest/token/request/", args);
 		try {
 			return new CreateAuthResponse(ret.getString("requestkey"),
@@ -57,7 +57,7 @@ public class WorkTrailAppApi {
 	}
 
 
-	private Map<String, String> createAuthArgs(WorkTrailScope[] scopes) {
+	private Map<String, String> createAuthArgs(WorkTrailAccessType accessType, WorkTrailScope[] scopes) {
 		StringBuilder builder = new StringBuilder();
 		for (WorkTrailScope scope : scopes) {
 			if (builder.length() > 0) {
@@ -67,7 +67,7 @@ public class WorkTrailAppApi {
 		}
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("scopes", builder.toString());
-		args.put("accesstype", "company");
+		args.put("accesstype", accessType.getStringIdentifier());
 		return args;
 	}
 	
@@ -187,8 +187,8 @@ public class WorkTrailAppApi {
 	 * @return auth token.
 	 * @throws RequestErrorException 
 	 */
-	public String generateTestUser(WorkTrailScope[] scopes) throws RequestErrorException {
-		Map<String, String> args = createAuthArgs(scopes);
+	public String generateTestUser(WorkTrailAccessType accessType, WorkTrailScope[] scopes) throws RequestErrorException {
+		Map<String, String> args = createAuthArgs(accessType, scopes);
 		JSONObject ret = requestPage("rest/token/generatetestuser/", args);
 		try {
 			String authToken = ret.getString("authtoken");
