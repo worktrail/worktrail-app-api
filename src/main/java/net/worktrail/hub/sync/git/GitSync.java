@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import net.worktrail.hub.sync.WorkTrailAuth;
+import net.worktrail.hub.sync.WorkTrailAppApi;
 import net.worktrail.hub.sync.WorkTrailSync;
 import net.worktrail.hub.sync.response.Employee;
 import net.worktrail.hub.sync.response.HubEntry;
@@ -32,7 +32,7 @@ public class GitSync extends WorkTrailSync {
 	private String urlPrefix;
 	private String projectName;
 
-	public GitSync(WorkTrailAuth auth, SyncStorage storage, File gitRepository) {
+	public GitSync(WorkTrailAppApi auth, SyncStorage storage, File gitRepository) {
 		super(auth, storage);
 		this.storage = storage;
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();

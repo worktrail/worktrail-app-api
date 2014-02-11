@@ -13,7 +13,7 @@ import java.util.Properties;
 
 import javax.xml.bind.DatatypeConverter;
 
-import net.worktrail.hub.sync.WorkTrailAuth;
+import net.worktrail.hub.sync.WorkTrailAppApi;
 import net.worktrail.hub.sync.WorkTrailSync;
 import net.worktrail.hub.sync.git.SyncStorage;
 import net.worktrail.hub.sync.response.Employee;
@@ -37,7 +37,7 @@ public class ActivityStreamSync extends WorkTrailSync {
 	private String username;
 	private String password;
 
-	public ActivityStreamSync(SyncStorage storage, WorkTrailAuth auth,
+	public ActivityStreamSync(SyncStorage storage, WorkTrailAppApi auth,
 			String[] args) {
 		super(auth, storage);
 		this.storage = storage;

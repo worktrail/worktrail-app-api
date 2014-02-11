@@ -14,12 +14,12 @@ import net.worktrail.hub.sync.response.RequestErrorException;
 
 public abstract class WorkTrailSync {
 	
-	private WorkTrailAuth auth;
+	private WorkTrailAppApi auth;
 	private SyncStorage storage;
 	private Map<String, Employee> employeeEmailMap;
 	private Set<String> missingUsers;
 
-	public WorkTrailSync(WorkTrailAuth auth, SyncStorage storage) {
+	public WorkTrailSync(WorkTrailAppApi auth, SyncStorage storage) {
 		this.auth = auth;
 		this.storage = storage;
 		this.missingUsers = new HashSet<>();

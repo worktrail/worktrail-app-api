@@ -20,7 +20,7 @@ public abstract class WorkTrailCliFramework {
 	@SuppressWarnings("unused")
 	private static final String STORE_REQUESTKEY = "requestkey";
 	private SyncStorage storage;
-	private WorkTrailAuth auth;
+	private WorkTrailAppApi auth;
 	
 	public WorkTrailCliFramework() {
 		init(createStorage());
@@ -38,7 +38,7 @@ public abstract class WorkTrailCliFramework {
 
 	protected void init(SyncStorage syncStorage) {
 		this.storage = syncStorage;
-		auth = new WorkTrailAuth(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY), storage.getString(STORE_AUTHTOKEN));
+		auth = new WorkTrailAppApi(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY), storage.getString(STORE_AUTHTOKEN));
 
 	}
 	
@@ -104,7 +104,7 @@ public abstract class WorkTrailCliFramework {
 				storage.setString(STORE_SECRETAPIKEY, secretApiKey);
 			}
 			
-			auth = new WorkTrailAuth(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY), storage.getString(STORE_AUTHTOKEN));
+			auth = new WorkTrailAppApi(storage.getString(STORE_APPKEY), storage.getString(STORE_SECRETAPIKEY), storage.getString(STORE_AUTHTOKEN));
 			CreateAuthResponse authRequest = auth.createAuthRequest(new WorkTrailScope[] {
 					WorkTrailScope.READ_EMPLOYEES, WorkTrailScope.SYNC_HUB_DATA });
 			storage.setString(STORE_AUTHTOKEN, authRequest.getAuthToken());
@@ -134,5 +134,5 @@ public abstract class WorkTrailCliFramework {
 				&& storage.getString(STORE_AUTHTOKEN) != null;
 	}
 	
-	protected abstract WorkTrailSync createSyncObject(SyncStorage storage, WorkTrailAuth auth, String[] args);
+	protected abstract WorkTrailSync createSyncObject(SyncStorage storage, WorkTrailAppApi auth, String[] args);
 }

@@ -24,18 +24,18 @@ import org.json.JSONObject;
 
 import at.tapo.worktrail.api.javaonly.WorkTrailConnectionUtils;
 
-public class WorkTrailAuth {
+public class WorkTrailAppApi {
 	private String appKey;
 	private String secretApiKey;
 	private String authToken;
 	public static final String WORKTRAIL_SERVER = "https://worktrail.net";
 //	private static final String WORKTRAIL_SERVER = "http://tools.sphene.net:8888";
-	private static Logger logger = Logger.getLogger(WorkTrailAuth.class.getName());
+	private static Logger logger = Logger.getLogger(WorkTrailAppApi.class.getName());
 	private String workTrailServer = WORKTRAIL_SERVER;
 	public Object setServerUrl;
 
 	
-	public WorkTrailAuth(String appKey, String secretApiKey, String authToken) {
+	public WorkTrailAppApi(String appKey, String secretApiKey, String authToken) {
 		this.appKey = appKey;
 		this.secretApiKey = secretApiKey;
 		this.authToken = authToken;

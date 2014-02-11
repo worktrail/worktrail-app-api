@@ -2,7 +2,7 @@ package net.worktrail.hub.sync.git;
 
 import java.io.File;
 
-import net.worktrail.hub.sync.WorkTrailAuth;
+import net.worktrail.hub.sync.WorkTrailAppApi;
 import net.worktrail.hub.sync.WorkTrailCliFramework;
 import net.worktrail.hub.sync.WorkTrailSync;
 
@@ -21,7 +21,7 @@ public class GitSyncCli extends WorkTrailCliFramework {
 
 	@Override
 	protected WorkTrailSync createSyncObject(SyncStorage storage,
-			WorkTrailAuth auth, String[] args) {
+			WorkTrailAppApi auth, String[] args) {
 		return new GitSync(auth, storage, new File(args[1]));
 	}
 
