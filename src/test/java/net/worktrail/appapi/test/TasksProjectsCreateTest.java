@@ -17,8 +17,8 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class WorkTrailAppApiTest extends AbstractWorkTrailAppApiTest {
-	private static final Logger logger = Logger.getLogger(WorkTrailAppApiTest.class.getName());
+public class TasksProjectsCreateTest extends AbstractWorkTrailAppApiTest {
+	private static final Logger logger = Logger.getLogger(TasksProjectsCreateTest.class.getName());
 	
 	@Test
 	public void testFetchEmployees() throws Exception {
