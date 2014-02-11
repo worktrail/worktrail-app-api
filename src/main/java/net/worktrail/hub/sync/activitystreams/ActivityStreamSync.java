@@ -114,6 +114,11 @@ public class ActivityStreamSync extends WorkTrailSync {
 						continue;
 					}
 					
+					if (employee == null) {
+						// we can only sync items with employee.
+						continue;
+					}
+					
 					toCreate.add(new HubEntry(identifier, employee, updated.getTime(), null, SrcType.ISSUES, entryTitleText, link));
 				} else {
 					Element itemElement = element.getFirstChildElement("title", atomNamespace);

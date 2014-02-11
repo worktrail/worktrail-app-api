@@ -27,10 +27,11 @@ public class WorkTrailAuth {
 	private String appKey;
 	private String secretApiKey;
 	private String authToken;
-	private static final String WORKTRAIL_SERVER = "https://worktrail.net";
+	public static final String WORKTRAIL_SERVER = "https://worktrail.net";
 //	private static final String WORKTRAIL_SERVER = "http://tools.sphene.net:8888";
 	private static Logger logger = Logger.getLogger(WorkTrailAuth.class.getName());
 	private String workTrailServer = WORKTRAIL_SERVER;
+	public Object setServerUrl;
 
 	
 	public WorkTrailAuth(String appKey, String secretApiKey, String authToken) {
@@ -43,6 +44,18 @@ public class WorkTrailAuth {
 	
 	
 	public CreateAuthResponse createAuthRequest(WorkTrailScope[] scopes) throws RequestErrorException {
+		Map<String, String> args = createAuthArgs(scopes);
+		JSONObject ret = requestPage("rest/token/request/", args);
+		try {
+			return new CreateAuthResponse(ret.getString("requestkey"),
+					ret.getString("authtoken"), new URL(ret.getString("redirecturl")));
+		} catch (MalformedURLException | JSONException e) {
+			throw new RequestErrorException("Error while sending auth request.", e);
+		}
+	}
+
+
+	private Map<String, String> createAuthArgs(WorkTrailScope[] scopes) {
 		StringBuilder builder = new StringBuilder();
 		for (WorkTrailScope scope : scopes) {
 			if (builder.length() > 0) {
@@ -53,13 +66,7 @@ public class WorkTrailAuth {
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("scopes", builder.toString());
 		args.put("accesstype", "company");
-		JSONObject ret = requestPage("rest/token/request/", args);
-		try {
-			return new CreateAuthResponse(ret.getString("requestkey"),
-					ret.getString("authtoken"), new URL(ret.getString("redirecturl")));
-		} catch (MalformedURLException | JSONException e) {
-			throw new RequestErrorException("Error while sending auth request.", e);
-		}
+		return args;
 	}
 	
 	public EmployeeListResponse fetchEmployees() throws RequestErrorException {
@@ -158,6 +165,33 @@ public class WorkTrailAuth {
 			return new JSONObject(ret.toString());
 		} catch (IOException | JSONException e) {
 			throw new RuntimeException("Error when requesting page {" + path + "}", e);
+		}
+	}
+
+
+	public void setServerUrl(String serverUrl) {
+		this.workTrailServer = serverUrl;
+	}
+
+
+	/**
+	 * generates a test user - will NOT work on https://worktrail.net !
+	 * @return auth token.
+	 */
+	public String generateTestUser(WorkTrailScope[] scopes) {
+		Map<String, String> args = createAuthArgs(scopes);
+		JSONObject ret = requestPage("rest/token/generatetestuser/", args);
+		try {
+			String authToken = ret.getString("authtoken");
+			this.authToken = authToken;
+			return authToken;
+		} catch (JSONException e) {
+			try {
+				logger.log(Level.SEVERE, "Error while generating test user: " + ret.toString(4));
+			} catch (JSONException e1) {
+				// never mind..
+			}
+			throw new RuntimeException("Error while generating test user.", e);
 		}
 	}
 }

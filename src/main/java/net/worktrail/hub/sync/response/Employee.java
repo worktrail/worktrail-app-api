@@ -1,5 +1,7 @@
 package net.worktrail.hub.sync.response;
 
+import com.google.common.base.Objects;
+
 public class Employee {
 
 	private String firstName;
@@ -34,6 +36,17 @@ public class Employee {
 	
 	public String getPrimaryEmail() {
 		return primaryEmail;
+	}
+	
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this)
+			.add("employeeId", employeeId)
+			.add("firstName", firstName)
+			.add("lastName", lastName)
+			.add("displayName", displayName)
+			.add("primaryEmail", primaryEmail)
+			.toString();
 	}
 
 }
