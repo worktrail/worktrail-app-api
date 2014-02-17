@@ -13,6 +13,7 @@ public class HubEntry {
 	private String summary;
 	private String link;
 	private String identifier;
+	private Privacy privacy;
 
 	/**
 	 * 
@@ -32,6 +33,10 @@ public class HubEntry {
 		this.srcType = srcType;
 		this.summary = summary;
 		this.link = link;
+	}
+	public HubEntry(String identifier, Employee employee, Date time, Date endTime, SrcType srcType, String summary, String link, Privacy privacy) {
+		this(identifier, employee, time, endTime, srcType, summary, link);
+		this.privacy = privacy;
 	}
 	
 	public String getIdentifier() {
@@ -61,6 +66,10 @@ public class HubEntry {
 	public String getLink() {
 		return link;
 	}
+	
+	public Privacy getPrivacy() {
+		return privacy;
+	}
 
 	public JSONObject toJSONObject() {
 		try {
@@ -75,6 +84,9 @@ public class HubEntry {
 			ret.put("srctype", srcType.getStringIdentifier());
 			ret.put("summary", summary);
 			ret.put("link", link);
+			if (privacy != null) { 
+				ret.put("privacy", privacy.getStringIdentifier());
+			}
 			return ret;
 		} catch (JSONException e) {
 			throw new RuntimeException("Error while converting hub entry to json.", e);
