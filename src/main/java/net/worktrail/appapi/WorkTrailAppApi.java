@@ -180,7 +180,7 @@ public class WorkTrailAppApi {
 			}
 			return response;
 		} catch (IOException | JSONException e) {
-			throw new RuntimeException("Error when requesting page {" + path + "}", e);
+			throw new RequestErrorException("Error when requesting page {" + path + "}", e);
 		}
 	}
 
