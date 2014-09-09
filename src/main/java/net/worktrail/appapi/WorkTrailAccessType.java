@@ -1,5 +1,11 @@
 package net.worktrail.appapi;
 
+/**
+ * The access type of an auth token - it can either access employee level data or
+ * company level data (has access to all employees).
+ * 
+ * @author herbert
+ */
 public enum WorkTrailAccessType {
 	COMPANY("company"),
 	EMPLOYEE("employee"),

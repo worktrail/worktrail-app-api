@@ -2,6 +2,12 @@ package net.worktrail.appapi.response;
 
 import java.net.URL;
 
+/**
+ * Response to a create auth request - returns a URL the user has to visit to authenticate
+ * the app. After the user has authorized the app, the app can use the given authToken
+ * to access private data of the user.
+ * @author herbert
+ */
 public class CreateAuthResponse extends WorkTrailResponse {
 	
 	private String requestKey;

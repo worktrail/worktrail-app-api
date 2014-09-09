@@ -1,5 +1,10 @@
 package net.worktrail.appapi;
 
+/**
+ * Scopes which define the type of access an app has to user data.
+ * 
+ * @author herbert
+ */
 public enum WorkTrailScope {
 	READ_TASKS("read-tasks"),
 	WRITE_TASKS("write-tasks"),

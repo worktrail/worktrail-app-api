@@ -29,17 +29,29 @@ import org.json.JSONObject;
 
 import at.tapo.worktrail.api.javaonly.WorkTrailConnectionUtils;
 
+/**
+ * Entry point for accessing the WorkTrail API - see https://worktrail.net/en/api/ for details.
+ * 
+ * @author herbert
+ */
 public class WorkTrailAppApi {
+	private static Logger logger = Logger.getLogger(WorkTrailAppApi.class.getName());
+
 	private String appKey;
 	private String secretApiKey;
 	private String authToken;
 	public static final String WORKTRAIL_SERVER = "https://worktrail.net";
-//	private static final String WORKTRAIL_SERVER = "http://tools.sphene.net:8888";
-	private static Logger logger = Logger.getLogger(WorkTrailAppApi.class.getName());
 	private String workTrailServer = WORKTRAIL_SERVER;
 	public Object setServerUrl;
 
 	
+	/**
+	 * Creates a new api accessor instance.
+	 * 
+	 * @param appKey Application key, provided by WorkTrail - https://worktrail.net/en/api/apps/
+	 * @param secretApiKey When registering your app, you will also receive a secret api key.
+	 * @param authToken Auth token is required to access secure api endpoints - ie. everything except {@link #createAuthRequest(WorkTrailAccessType, WorkTrailScope[])} (see linked documentation for auth details)
+	 */
 	public WorkTrailAppApi(String appKey, String secretApiKey, String authToken) {
 		this.appKey = appKey;
 		this.secretApiKey = secretApiKey;
@@ -56,7 +68,17 @@ public class WorkTrailAppApi {
 		this.authToken = authToken;
 	}
 	
-	
+	/**
+	 * Will request a new authentication request. The returned {@link CreateAuthResponse} will 
+	 * contain a URL your users will have to open in their browser to authenticate this app.
+	 * 
+	 * See API documentation at https://worktrail.net/en/api/ for details about this parameters!
+	 * 
+	 * @param accessType Which access type is required - company or employee level access.
+	 * @param scopes All required scopes this app requires.
+	 * @return {@link CreateAuthResponse} with a URL where the user can grant access to the app.
+	 * @throws RequestErrorException if an error happens during authentication.
+	 */
 	public CreateAuthResponse createAuthRequest(WorkTrailAccessType accessType, WorkTrailScope[] scopes) throws RequestErrorException {
 		Map<String, String> args = createAuthArgs(accessType, scopes);
 		JSONObject ret = requestPage("rest/token/request/", args);
