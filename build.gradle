@@ -7,6 +7,8 @@ apply plugin: 'maven-publish'
 group = 'net.worktrail';
 version = '0.2.0'
 
+
+
 repositories {
   mavenCentral();
 }
@@ -15,6 +17,27 @@ publishing {
   publications {
     mavenJava(MavenPublication) {
       from components.java
+      
+      pom.withXml {
+      	asNode().with {
+      		appendNode('name', 'worktrail-app-api')
+	        appendNode('description', 'Implementation of Developer API for WorkTrail')
+	        appendNode('scm').with {
+                appendNode('url', 'git@github.com:worktrail/worktrail-app-api.git')
+                appendNode('developerConnection', 'scm:git:git@github.com:worktrail/worktrail-app-api.git')
+                appendNode('connection', 'scm:git:git@github.com:worktrail/worktrail-app-api.git')
+            }
+	        appendNode('licenses').appendNode('license').with {
+                        appendNode('name', 'GNU General Public License (GPL)')
+                        appendNode('url', 'http://www.gnu.org/licenses/gpl.html')
+            }
+	        appendNode('developers').appendNode('developer').with {
+                                appendNode('id', 'hpoul')
+                                appendNode('name', 'Herbert Poul')
+                                appendNode('email', 'herbert@poul.at')
+            }
+      	}
+      }
     }
   }
 }
