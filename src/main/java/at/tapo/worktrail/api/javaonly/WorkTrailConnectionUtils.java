@@ -30,7 +30,7 @@ public class WorkTrailConnectionUtils {
 		urlConnection.setDoOutput(true);
 		urlConnection.setDoInput(true);
 		urlConnection.setConnectTimeout(5000);
-		urlConnection.setReadTimeout(10000);
+		urlConnection.setReadTimeout(20000);
 		// urlConnection.setChunkedStreamingMode(0);
 		urlConnection.setFixedLengthStreamingMode(tosend.length);
 

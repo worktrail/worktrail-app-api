@@ -9,6 +9,9 @@ public class EmployeeImpl implements Employee {
 	private String displayName;
 	private String primaryEmail;
 	private long employeeId;
+	
+	public EmployeeImpl() {
+	}
 
 	public EmployeeImpl(long employeeId, String firstName, String lastName, String displayName, String primaryEmail) {
 		this.employeeId = employeeId;

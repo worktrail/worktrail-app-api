@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +16,12 @@ import net.worktrail.appapi.model.Company;
 import net.worktrail.appapi.model.CompanyImpl;
 import net.worktrail.appapi.model.EmployeeImpl;
 import net.worktrail.appapi.model.HubEntry;
+import net.worktrail.appapi.model.WorkEntry;
+import net.worktrail.appapi.model.WorkEntryImpl;
 import net.worktrail.appapi.response.CreateAuthResponse;
 import net.worktrail.appapi.response.CreateHubEntriesResponse;
 import net.worktrail.appapi.response.RequestErrorException;
+import net.worktrail.appapi.response.WorkEntryListResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,6 +104,33 @@ public class WorkTrailAppApi {
 			return new EmployeeListResponse(employeeList);
 		} catch (JSONException e) {
 			throw new RequestErrorException("Error while fetching employee list.", e);
+		}
+	}
+	
+	public WorkEntryListResponse fetchWorkEntries(long lastModifyDate, long page) throws RequestErrorException {
+		JSONObject ret = requestPage("rest/workentries/?after="+lastModifyDate+"&page="+page);
+		try {
+			JSONArray array = ret.getJSONArray("list");
+			Collection<WorkEntry> workEntryList = new ArrayList<>();
+			for (int i = 0 ; i < array.length() ; i++) {
+				JSONObject workEntryObj = array.getJSONObject(i);
+				try {
+					WorkEntryImpl workEntry = new WorkEntryImpl(
+							workEntryObj.getLong("id"),
+							workEntryObj.getString("description"),
+							new Date(workEntryObj.getJSONObject("start").getLong("time") * 1000),
+							new Date(workEntryObj.getJSONObject("end").getLong("time") * 1000),
+							workEntryObj.getLong("taskid"),
+							workEntryObj.getLong("employee"),
+							workEntryObj.getLong("modifydate"));
+					workEntryList.add(workEntry);
+				} catch (JSONException e) {
+					logger.log(Level.SEVERE, "catched in invalid json response for work entry. " + workEntryObj.toString(4), e);
+				}
+			}
+			return new WorkEntryListResponse(ret.getLong("num_pages"), ret.getLong("page"), workEntryList);
+		} catch (JSONException e) {
+			throw new RequestErrorException("Error while fetching work entry list.", e);
 		}
 	}
 	
