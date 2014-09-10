@@ -21,3 +21,9 @@ Entry point is net.worktrail.appapi.WorkTrailAppApi - see javadoc for more infor
 
     ./gradlew eclipse
     # import existing project into eclipse.
+
+# License
+
+worktrail-app-api is available under The BSD 2-Clause License. Please
+contribute back by sending us pull requests on github:
+https://github.com/worktrail/worktrail-app-api

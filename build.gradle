@@ -28,8 +28,9 @@ publishing {
                 appendNode('connection', 'scm:git:git@github.com:worktrail/worktrail-app-api.git')
             }
 	        appendNode('licenses').appendNode('license').with {
-                        appendNode('name', 'GNU General Public License (GPL)')
-                        appendNode('url', 'http://www.gnu.org/licenses/gpl.html')
+                        appendNode('name', 'The BSD License')
+                        appendNode('url', 'http://www.opensource.org/licenses/bsd-license.php')
+                        appendNode('distribution', 'repo')
             }
 	        appendNode('developers').appendNode('developer').with {
                                 appendNode('id', 'hpoul')
