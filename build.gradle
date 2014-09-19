@@ -2,10 +2,12 @@
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 group = 'net.worktrail';
 version = '0.2.0'
+
 
 
 
@@ -13,35 +15,72 @@ repositories {
   mavenCentral();
 }
 
-publishing {
-  publications {
-    mavenJava(MavenPublication) {
-      from components.java
-      
-      pom.withXml {
-      	asNode().with {
-      		appendNode('name', 'worktrail-app-api')
-	        appendNode('description', 'Implementation of Developer API for WorkTrail')
-	        appendNode('scm').with {
-                appendNode('url', 'git@github.com:worktrail/worktrail-app-api.git')
-                appendNode('developerConnection', 'scm:git:git@github.com:worktrail/worktrail-app-api.git')
-                appendNode('connection', 'scm:git:git@github.com:worktrail/worktrail-app-api.git')
-            }
-	        appendNode('licenses').appendNode('license').with {
-                        appendNode('name', 'The BSD License')
-                        appendNode('url', 'http://www.opensource.org/licenses/bsd-license.php')
-                        appendNode('distribution', 'repo')
-            }
-	        appendNode('developers').appendNode('developer').with {
-                                appendNode('id', 'hpoul')
-                                appendNode('name', 'Herbert Poul')
-                                appendNode('email', 'herbert@poul.at')
-            }
-      	}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+
+signing {
+    sign configurations.archives
+}
+
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name 'worktrail-app-api'
+        packaging 'jar'
+        // optionally artifactId can be defined here 
+        description 'Implementation of Developer API for WorkTrail, a time tracking app.'
+        url 'https://github.com/worktrail/worktrail-app-api'
+
+        scm {
+          connection 'scm:git:git@github.com:worktrail/worktrail-app-api.git'
+          developerConnection 'scm:git:git@github.com:worktrail/worktrail-app-api.git'
+          url 'git@github.com:worktrail/worktrail-app-api.git'
+        }
+
+        licenses {
+          license {
+            name 'The BSD License'
+            url 'http://www.opensource.org/licenses/bsd-license.php'
+          }
+        }
+
+        developers {
+          developer {
+            id 'hpoul'
+            name 'Herbert Poul'
+            email 'herbert.poul@worktrail.net'
+          }
+        }
       }
     }
   }
 }
+
 
 
 dependencies {
